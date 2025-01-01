@@ -1,0 +1,43 @@
+/* Portfolio.css */
+.portfolio {
+    margin: 20px;
+  }
+  
+  .nft-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .nft-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .nft-card img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Live Feed Styles */
+  .live-feed {
+    margin-top: 20px;
+  }
+  
+  .live-feed h3 {
+    margin-bottom: 10px;
+  }
+  
