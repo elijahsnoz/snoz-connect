@@ -1,19 +1,15 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
-import Explore from './pages/Explore';
-import Profile from './pages/Profile';
-import UploadWork from './pages/UploadWork';
 
-const AppRoutes = () => (
-  <Router>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/explore" element={<Explore />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/upload" element={<UploadWork />} />
-    </Routes>
-  </Router>
-);
+const Routes = () => {
+  return (
+    <Router>
+      <Switch>
+        <Route path="/" exact component={Home} />
+        {/* Add other routes here */}
+      </Switch>
+    </Router>
+  );
+};
 
-export default AppRoutes;
+export default Routes;

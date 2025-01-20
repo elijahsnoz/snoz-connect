@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Snoz Connect</title>
+  <style>
+    /* General styles for Portfolio */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0c0c0c;
+      color: #fff;
+      text-align: center;
+    }
+    header {
+      background-color: #121212;
+      padding: 20px;
+    }
+    .logo {
+      font-size: 2rem;
+      color: #00ff99;
+      font-weight: bold;
+    }
+    .portfolio-section {
+      padding: 50px;
+    }
+    .portfolio-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .portfolio-item {
+      display: inline-block;
+      margin: 20px;
+      width: 250px;
+      height: 250px;
+      background-color: #333;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .portfolio-item .info {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      color: #fff;
+      font-size: 1.2rem;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 5px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Snoz Connect - Portfolio</div>
+  </header>
+
+  <section class="portfolio-section">
+    <h2>Your Digital Identity & Portfolio</h2>
+    <p>Explore your digital artworks and the tokens you've collected.</p>
+
+    <div class="portfolio-item">
+      <img src="artwork1.jpg" alt="Artwork 1">
+      <div class="info">Artwork 1 - NFT</div>
+    </div>
+    <div class="portfolio-item">
+      <img src="artwork2.jpg" alt="Artwork 2">
+      <div class="info">Artwork 2 - NFT</div>
+    </div>
+    <div class="portfolio-item">
+      <img src="artwork3.jpg" alt="Artwork 3">
+      <div class="info">Artwork 3 - NFT</div>
+    </div>
+  </section>
+
+</body>
+</html>

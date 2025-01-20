@@ -10,24 +10,34 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@ethersproject/providers": "^5.7.2",
+    "@stacks/auth": "^7.0.2",
     "@stacks/connect": "^7.9.0",
     "@stacks/connect-react": "^22.6.0",
-    "@stacks/network": "^4.3.0",
+    "@stacks/network": "^4.3.5",
     "@stacks/transactions": "^7.0.2",
+    "@walletconnect/web3-provider": "^1.8.0",
     "axios": "^1.3.4",
+    "bufferutil": "^4.0.9",
+    "ethers": "^6.13.5",
     "jsontokens": "^4.0.1",
-    "postcss": "^8.4.49",
+    "nth-check": "^2.0.1",
+    "postcss": "^8.4.31",
+    "postcss-selector-parser": "^6.1.2",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.7",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.1.1",
     "react-scripts": "^5.0.1",
     "resolve-url-loader": "^5.0.0",
-    "web3": "^4.16.0"
+    "utf-8-validate": "^6.0.5",
+    "web3": "^4.16.0",
+    "web3modal": "^1.9.12"
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "typescript": "^4.9.5"
   },
   "keywords": [
     "decentralized",
@@ -40,7 +50,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/elijahsnoz/snoz-connect"
+    "url": "git+https://github.com/elijahsnoz/snoz-connect.git"
   },
   "browserslist": {
     "production": [
@@ -53,5 +63,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/elijahsnoz/snoz-connect/issues"
+  },
+  "homepage": "https://github.com/elijahsnoz/snoz-connect#readme"
 }
