@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import WalletConnect from './WalletConnect';
 import Web3 from 'web3';
-import JobSearch from './JobSearch';
-import JobPosting from './components/JobPosting';
+import OpenSea from 'opensea-js';  // Import OpenSea API
 
 const App = () => {
   const [walletConnected, setWalletConnected] = useState(false);
@@ -11,6 +10,8 @@ const App = () => {
   const [balance, setBalance] = useState(null);
   const [nfts, setNfts] = useState([]);
   const [userRole, setUserRole] = useState(null);
+
+  const OPENSEA_API_KEY = 'd13a286938a9454f9159e856d53a2ed7';  // Your OpenSea API key
 
   useEffect(() => {
     if (walletConnected) {
@@ -34,11 +35,18 @@ const App = () => {
 
   const fetchNFTs = async () => {
     try {
-      const fetchedNFTs = await fetch(`https://api.example.com/nfts?owner=${userAddress}`);
-      const data = await fetchedNFTs.json();
-      setNfts(data);
+      const seaport = new OpenSea.OpenSeaPort(window.ethereum, {
+        networkName: OpenSea.Network.Main,
+        apiKey: OPENSEA_API_KEY,  // Set your API key for OpenSea
+      });
+
+      const ownerAssets = await seaport.api.getAssets({
+        owner: userAddress,
+      });
+
+      setNfts(ownerAssets.assets);
     } catch (error) {
-      console.error('Error fetching NFTs:', error);
+      console.error('Error fetching NFTs from OpenSea:', error);
     }
   };
 
@@ -64,8 +72,17 @@ const App = () => {
             ) : (
               <>
                 <p>You are logged in as: {userRole === 'seeker' ? 'Job Seeker' : 'Employer'}</p>
-                {userRole === 'seeker' && <JobSearch />}
-                {userRole === 'employer' && <JobPosting />}
+                <div>
+                  <h2>Your NFTs:</h2>
+                  <ul>
+                    {nfts.map((nft) => (
+                      <li key={nft.tokenId}>
+                        <img src={nft.imageUrl} alt={nft.name} width="100" />
+                        <p>{nft.name}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </>
             )}
           </>
