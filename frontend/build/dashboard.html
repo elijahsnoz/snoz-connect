@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Snoz Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ethersproject/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <style>
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white font-sans">
+
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-6">Your Dashboard</h1>
+        <p class="mb-4">Manage your wallet and create your portfolio here in a virtual space.</p>
+
+        <div class="mb-4">
+            <strong>Connected Address:</strong> 0xdeCF2d328Efb0cd72F79b0d52DFa8eA9223F3792
+        </div>
+        <div class="mb-6">
+            <strong>Balance:</strong> 0.000129929090990201 ETH
+        </div>
+
+        <!-- Create Portfolio Button -->
+        <button id="createPortfolioBtn"
+            class="bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded-lg shadow-md">
+            Create Portfolio
+        </button>
+
+        <button id="disconnectWalletBtn"
+            class="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg shadow-md ml-2">
+            Disconnect Wallet
+        </button>
+    </div>
+
+    <!-- Modal for Blockchain-Based Portfolio -->
+    <div id="portfolioModal" class="hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal">
+            <h2 class="text-xl font-bold mb-4">Create a Blockchain-Based Portfolio</h2>
+            <ul class="list-disc list-inside text-gray-700">
+                <li>
+                    <strong>Showcase Innovation:</strong> Use blockchain technology to validate your work.
+                </li>
+                <li>
+                    <strong>Mint Your Artwork:</strong> Convert your artwork, code, or designs into NFTs and showcase
+                    them.
+                </li>
+                <li>
+                    <strong>Connect to Blockchain:</strong> Use web3.js or Ethers.js to link your portfolio.
+                </li>
+                <li>
+                    <strong>Enable Cryptocurrency Transactions:</strong> Allow visitors to tip or purchase your work
+                    using cryptocurrency.
+                </li>
+            </ul>
+            <p class="text-sm text-gray-500 mt-4">
+                Note: You can integrate with platforms like Ethereum, Binance Smart Chain, or Polygon for cost-effective
+                and scalable solutions.
+            </p>
+            <button id="closeModalBtn"
+                class="mt-6 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Get Modal Elements
+        const createPortfolioBtn = document.getElementById("createPortfolioBtn");
+        const portfolioModal = document.getElementById("portfolioModal");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+
+        // Show Modal
+        createPortfolioBtn.addEventListener("click", () => {
+            portfolioModal.classList.remove("hidden");
+        });
+
+        // Close Modal
+        closeModalBtn.addEventListener("click", () => {
+            portfolioModal.classList.add("hidden");
+        });
+
+        // Disconnect Wallet (Placeholder functionality)
+        const disconnectWalletBtn = document.getElementById("disconnectWalletBtn");
+        disconnectWalletBtn.addEventListener("click", () => {
+            alert("Wallet disconnected!");
+        });
+    </script>
+
+</body>
+
+</html>

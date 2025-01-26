@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snoz Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.0/ethers.umd.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Glowing Text Effect */
+        .glow-text {
+            text-shadow: 0 0 5px rgba(255, 0, 255, 1), 0 0 10px rgba(255, 0, 255, 1), 0 0 20px rgba(255, 0, 255, 1), 0 0 40px rgba(255, 0, 255, 1), 0 0 80px rgba(255, 0, 255, 1);
+        }
+
+        /* Background Gradient Effect */
+        .bg-metaverse {
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.7) 50%, rgba(40, 40, 255, 0.6) 50%), url('hero.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* Neon Button Styles */
+        .neon-btn {
+            background: linear-gradient(45deg, #f06, #0ff);
+            border-radius: 30px;
+            padding: 10px 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 1), 0 0 20px rgba(255, 0, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.8);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .neon-btn:hover {
+            background: linear-gradient(45deg, #0ff, #f06);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 30px rgba(255, 0, 255, 1);
+        }
+
+        /* 3D Earth rotation */
+        .earth-container {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 150px;
+            perspective: 1000px;
+        }
+
+        .earth {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 50%, rgba(0, 0, 0, 0.3) 100%);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+            transform-style: preserve-3d;
+            animation: rotateEarth 10s linear infinite;
+            background-color: #2f3a54; /* Base color for Earth */
+        }
+
+        .earth::before,
+        .earth::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 25%, rgba(0, 0, 0, 0.2) 100%);
+            transform: rotateX(90deg);
+        }
+
+        @keyframes rotateEarth {
+            0% {
+                transform: rotateY(0deg);
+            }
+
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
+
+        /* Text and Section Styles */
+        .neon-text {
+            color: #0ff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 1), 0 0 20px rgba(255, 0, 255, 1);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white font-sans">
+
+    <!-- Home Section -->
+    <section id="home" class="h-screen flex flex-col items-center justify-center bg-metaverse bg-cover bg-center">
+        <!-- Earth Animation -->
+        <div class="earth-container">
+            <div class="earth"></div>
+        </div>
+
+        <h1 class="glow-text text-6xl font-bold mb-6">Snoz Connect</h1>
+        <p class="mb-8 text-lg text-center">Showcase, manage, and monetize your creativity. Unlock new opportunities and engage your audience in a digital world.</p>
+
+        <div>
+            <button id="connectWallet" class="neon-btn">Connect Wallet</button>
+            <div id="walletInfo" class="mt-4"></div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section (Initially Hidden) -->
+    <section id="dashboard" class="hidden py-20 bg-gray-800">
+        <div class="container mx-auto text-center">
+            <h2 class="neon-text text-4xl font-bold mb-6">Your Dashboard</h2>
+            <p class="text-lg mb-8">Manage your wallet and view your portfolio here in a virtual space.</p>
+            <div id="walletInfoDashboard"></div>
+            <button id="viewPortfolioBtn" class="neon-btn">Create Portfolio</button>
+            <button id="disconnectWalletBtn" class="neon-btn mt-4 bg-red-600 hover:bg-red-700">Disconnect Wallet</button>
+            
+            <!-- Add the canvas for the chart -->
+            <div class="mt-12">
+                <canvas id="portfolioChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const connectWalletButton = document.getElementById('connectWallet');
+        const walletInfoElement = document.getElementById('walletInfo');
+        const homeSection = document.getElementById('home');
+        const dashboardSection = document.getElementById('dashboard');
+        const disconnectWalletButton = document.getElementById('disconnectWalletBtn');
+
+        let userAddress = null;
+
+        connectWalletButton.addEventListener('click', async () => {
+            if (window.ethereum) {
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                await provider.send('eth_requestAccounts', []);
+                const signer = provider.getSigner();
+                userAddress = await signer.getAddress();
+                const balance = ethers.utils.formatEther(await provider.getBalance(userAddress));
+
+                // Display wallet info in the home section
+                walletInfoElement.innerHTML = `
+                    <p class="neon-text">Address: ${userAddress}</p>
+                    <p class="neon-text">Balance: ${balance} ETH</p>
+                `;
+                connectWalletButton.style.display = 'none';
+
+                // Hide home section and show dashboard section
+                homeSection.style.display = 'none';
+                dashboardSection.classList.remove('hidden');
+
+                // Display wallet info on the dashboard
+                const walletInfoDashboard = document.getElementById('walletInfoDashboard');
+                walletInfoDashboard.innerHTML = `
+                    <p class="neon-text">Connected Address: ${userAddress}</p>
+                    <p class="neon-text">Balance: ${balance} ETH</p>
+                `;
+                
+                // Call the function to render the chart
+                renderPortfolioChart();
+            } else {
+                alert('Please install MetaMask.');
+            }
+        });
+
+        // Disconnect wallet function (reloads the page to reset)
+        disconnectWalletButton.addEventListener('click', () => {
+            window.location.reload();
+        });
+
+        // Function to render the portfolio chart
+        function renderPortfolioChart() {
+            const ctx = document.getElementById('portfolioChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                    datasets: [{
+                        label: 'ETH Portfolio Performance',
+                        data: [0.1, 0.2, 0.15, 0.3, 0.25, 0.35], // Replace with actual data
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

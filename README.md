@@ -75,13 +75,6 @@ A decentralized portfolio platform built on Stacks blockchain, showcasing creati
 
 [Snoz Connect Architecture Diagram](https://www.notion.so/Snoz-Connect-Architecture-Diagram-682f6bcc72354bdb86805f450bb1908f?pvs=21)
 
-
-
-
-# Snoz Connect
-
-Snoz Connect is a social networking platform designed to bring artists, musicians, and creative professionals together. The platform allows users to create profiles, share content, and connect with one another.
-
 ## Features
 
 - User authentication (sign up, login)
