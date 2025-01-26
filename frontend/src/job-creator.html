@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Creator</title>
+</head>
+<body>
+  <h1>Job Creator - Post a Job</h1>
+
+  <!-- Job Posting Form -->
+  <input type="text" id="job-title" placeholder="Job Title">
+  <textarea id="job-description" placeholder="Job Description"></textarea>
+  <button id="post-job-btn">Post Job</button>
+
+  <script>
+    document.getElementById('post-job-btn').addEventListener('click', () => {
+      const jobTitle = document.getElementById('job-title').value;
+      const jobDescription = document.getElementById('job-description').value;
+      alert(`Posting job: ${jobTitle}\nDescription: ${jobDescription}`);
+      // Implement your job posting logic here (API or contract call)
+    });
+  </script>
+</body>
+</html>

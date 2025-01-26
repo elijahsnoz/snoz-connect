@@ -1,35 +1,50 @@
-import React, { useState } from 'react';
-import { useConnect } from '@stacks/connect-react'; // Ensure this package is installed
+import React, { useState, useEffect } from 'react';
+import { useConnect } from '@stacks/connect-react';
 
 const ConnectWallet = () => {
-  // Destructuring functions and session object from `useConnect`
+  // Destructuring the functions and session from useConnect hook
   const { doOpenAuth, userSession, signOut } = useConnect();
   const [userAddress, setUserAddress] = useState(null);
+  const [loading, setLoading] = useState(false); // Loading state to prevent multiple clicks
+
+  useEffect(() => {
+    // Check if the user is already connected on initial render
+    if (userSession?.isUserSignedIn()) {
+      const userData = userSession.loadUserData();
+      const address = userData.profile.stxAddress.mainnet;
+      setUserAddress(address);
+    }
+  }, [userSession]);
 
   // Handle wallet connection
   const handleConnect = async () => {
+    setLoading(true); // Set loading state
     try {
-      await doOpenAuth(); // Opens the wallet for authentication
-      const userData = userSession.loadUserData(); // Load user data from the session
-      const address = userData.profile.stxAddress.mainnet; // Mainnet Stacks address
-      setUserAddress(address); // Update state with the wallet address
+      await doOpenAuth(); // Open wallet for authentication
+      const userData = userSession.loadUserData(); // Load user data from session
+      console.log('User Data:', userData); // Log user data for debugging
+      const address = userData.profile.stxAddress.mainnet; // Get Stacks address
+      setUserAddress(address); // Update the state with wallet address
     } catch (err) {
       console.error("Wallet connection failed:", err);
+      alert('Connection failed! Please try again.');
+    } finally {
+      setLoading(false); // Reset loading state after the process
     }
   };
 
   // Handle wallet disconnection
   const handleDisconnect = () => {
-    signOut(); // Ends the session
-    setUserAddress(null); // Clear the address
+    signOut(); // Sign out the user
+    setUserAddress(null); // Clear the user address state
   };
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      {/* If user is not connected, show Connect button */}
+      {/* If not connected, show "Connect Wallet" button */}
       {!userAddress ? (
-        <button onClick={handleConnect} style={buttonStyle}>
-          Connect Wallet
+        <button onClick={handleConnect} style={buttonStyle} disabled={loading}>
+          {loading ? 'Connecting...' : 'Connect Wallet'}
         </button>
       ) : (
         <div>
@@ -52,6 +67,7 @@ const buttonStyle = {
   border: 'none',
   borderRadius: '5px',
   cursor: 'pointer',
+  opacity: 0.9,
 };
 
 export default ConnectWallet;

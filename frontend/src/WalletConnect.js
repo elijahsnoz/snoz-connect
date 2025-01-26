@@ -1,61 +1,87 @@
-import { Web3Provider } from '@ethersproject/providers';
-import Web3Modal from 'web3modal';
-import WalletConnectProvider from '@walletconnect/web3-provider'; // Import WalletConnect provider
-import { initWeb3Modal, connectWallet, disconnectWallet } from '../utils/connectWallet';
+// src/WalletConnect.js
 
-let web3Modal;
-let provider;
-let signer;
-let userAddress;
+import React, { useEffect, useState } from "react";
+import Web3Modal from "web3modal";
+import { Web3Provider } from "@ethersproject/providers";
+import Web3 from "web3";
 
-export const initWeb3Modal = () => {
-  // Create a Web3Modal instance
-  web3Modal = new Web3Modal({
-    cacheProvider: true, // Store the last selected provider
-    providerOptions: {
-      // Available wallet options (MetaMask, WalletConnect, etc.)
-      injected: {
-        display: {
-          name: 'MetaMask',
-          description: 'Connect with MetaMask'
-        },
-        package: null // Use the injected provider (MetaMask)
-      },
-      walletconnect: {
-        display: {
-          name: 'WalletConnect',
-          description: 'Connect with WalletConnect'
-        },
-        package: WalletConnectProvider, // This is where WalletConnectProvider is used
-        options: {
-          rpc: {
-            1: 'https://mainnet.infura.io/v3/YOUR_INFURA_KEY',
-            4: 'https://rinkeby.infura.io/v3/YOUR_INFURA_KEY'
+const WalletConnect = ({ onConnect }) => {
+  const [provider, setProvider] = useState(null);
+  const [userAddress, setUserAddress] = useState(null);
+  const [isConnecting, setIsConnecting] = useState(false);
+
+  useEffect(() => {
+    if (provider) {
+      const web3 = new Web3(provider);
+      const getAddress = async () => {
+        try {
+          const accounts = await web3.eth.getAccounts();
+          if (accounts.length > 0) {
+            const address = accounts[0];
+            setUserAddress(address);
+            onConnect(address);
           }
+        } catch (error) {
+          console.error("Error getting accounts: ", error);
         }
-      }
+      };
+      getAddress();
     }
-  });
+  }, [provider, onConnect]);
+
+  const connectWallet = async () => {
+    setIsConnecting(true);
+
+    const modal = new Web3Modal({
+      cacheProvider: true,
+      providerOptions: {
+        injected: {
+          display: {
+            name: "MetaMask",
+            description: "Connect with the MetaMask browser extension",
+          },
+          package: null,
+        },
+        walletconnect: {
+          display: {
+            name: "WalletConnect",
+            description: "Scan with WalletConnect",
+          },
+          package: require("@walletconnect/web3-provider"),
+          options: {
+            infuraId: "your-infura-id", // Replace with your Infura project ID
+          },
+        },
+      },
+    });
+
+    const connection = await modal.connect();
+    const web3 = new Web3(connection);
+    setProvider(connection);
+
+    const accounts = await web3.eth.getAccounts();
+    if (accounts.length > 0) {
+      const address = accounts[0];
+      setUserAddress(address);
+      onConnect(address);
+    }
+
+    setIsConnecting(false);
+  };
+
+  return (
+    <div>
+      {isConnecting ? (
+        <p>Connecting wallet...</p>
+      ) : (
+        <button onClick={connectWallet}>
+          Connect Wallet
+        </button>
+      )}
+
+      {userAddress && <p>Connected: {userAddress}</p>}
+    </div>
+  );
 };
 
-// Function to connect wallet
-export const connectWallet = async () => {
-  // Open the Web3Modal and select a provider
-  const instance = await web3Modal.connect();
-  provider = new Web3Provider(instance);
-
-  // Get the signer (user’s wallet)
-  signer = provider.getSigner();
-  userAddress = await signer.getAddress();
-
-  console.log('Connected address:', userAddress);
-};
-
-// Function to disconnect wallet
-export const disconnectWallet = () => {
-  web3Modal.clearCachedProvider();
-  provider = null;
-  signer = null;
-  userAddress = null;
-  console.log('Disconnected wallet');
-};
+export default WalletConnect;

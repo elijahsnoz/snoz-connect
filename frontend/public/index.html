@@ -1,313 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Snoz Connect</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    /* General Styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #0c0c0c;
-      color: #fff;
-      overflow-x: hidden;
-    }
-    header {
-      position: fixed;
-      width: 100%;
-      z-index: 9999;
-      background: rgba(0, 0, 0, 0.7);
-      top: 0;
-      padding: 20px 0;
-      text-align: center;
-    }
-    header .logo {
-      font-size: 2rem;
-      font-weight: 600;
-      color: #00ff99;
-      letter-spacing: 2px;
-    }
-    header nav a {
-      color: #fff;
-      margin: 0 20px;
-      font-size: 1rem;
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s;
-    }
-    header nav a:hover {
-      color: #00ff99;
-    }
-    section.hero {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: url('https://source.unsplash.com/random/1920x1080') no-repeat center center/cover;
-      text-align: center;
-      padding: 0 20px;
-    }
-    section.hero h1 {
-      font-size: 3.5rem;
-      color: #fff;
-      margin-bottom: 20px;
-      letter-spacing: 2px;
-    }
-    .cta-button {
-      background: #00ff99;
-      color: #000;
-      padding: 12px 24px;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 30px;
-      transition: background-color 0.3s;
-    }
-    .cta-button:hover {
-      background: #00cc80;
-    }
-    section.cards {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      padding: 50px 20px;
-      background-color: #121212;
-    }
-    .card {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      margin: 20px;
-      width: 300px;
-      text-align: center;
-      border-radius: 15px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-      transition: transform 0.3s;
-    }
-    .card:hover {
-      transform: translateY(-10px);
-    }
-    footer {
-      background-color: #111;
-      text-align: center;
-      padding: 20px;
-      color: #777;
-      font-size: 1rem;
-      position: relative;
-    }
-    footer a {
-      color: #00ff99;
-      text-decoration: none;
-    }
-    footer a:hover {
-      color: #00cc80;
-    }
-    /* Portfolio Section */
-    .portfolio {
-      background-color: #1a1a1a;
-      padding: 50px 0;
-      text-align: center;
-    }
-    .portfolio h2 {
-      color: #fff;
-      font-size: 2.5rem;
-      margin-bottom: 30px;
-    }
-    .portfolio p {
-      font-size: 1.2rem;
-      color: #aaa;
-      margin-bottom: 30px;
-    }
-    .portfolio-button {
-      background-color: #00ff99;
-      color: #000;
-      border: none;
-      padding: 15px 30px;
-      font-size: 1.2rem;
-      border-radius: 30px;
-      cursor: pointer;
-    }
-    .portfolio-button:hover {
-      background-color: #00cc80;
-    }
-    /* Subscription Section */
-    #subscription {
-      background-color: #121212;
-      padding: 50px 0;
-      text-align: center;
-    }
-    #subscription h2 {
-      color: #fff;
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-    }
-    #subscription p {
-      font-size: 1.2rem;
-      color: #aaa;
-      margin-bottom: 30px;
-    }
-    #subscription form input {
-      padding: 12px;
-      font-size: 1rem;
-      margin-bottom: 20px;
-      border-radius: 30px;
-      width: 300px;
-      border: none;
-    }
-    #subscription form button {
-      background-color: #00ff99;
-      color: #000;
-      border: none;
-      padding: 12px 24px;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 30px;
-      transition: background-color 0.3s;
-    }
-    #subscription form button:hover {
-      background-color: #00cc80;
-    }
-    /* Dropdown for Wallets */
-    .wallet-dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    .wallet-dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #1a1a1a;
-      min-width: 160px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-      z-index: 1;
-      border-radius: 10px;
-    }
-    .wallet-dropdown-content a {
-      color: #fff;
-      padding: 10px 16px;
-      text-decoration: none;
-      display: block;
-    }
-    .wallet-dropdown-content a:hover {
-      background-color: #00ff99;
-      color: #000;
-    }
-    .wallet-dropdown:hover .wallet-dropdown-content {
-      display: block;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snoz Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.0/ethers.umd.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Glowing Text Effect */
+        .glow-text {
+            text-shadow: 0 0 5px rgba(255, 0, 255, 1), 0 0 10px rgba(255, 0, 255, 1), 0 0 20px rgba(255, 0, 255, 1), 0 0 40px rgba(255, 0, 255, 1), 0 0 80px rgba(255, 0, 255, 1);
+        }
+
+        /* Background Gradient Effect */
+        .bg-metaverse {
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.7) 50%, rgba(40, 40, 255, 0.6) 50%), url('hero.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* Neon Button Styles */
+        .neon-btn {
+            background: linear-gradient(45deg, #f06, #0ff);
+            border-radius: 30px;
+            padding: 10px 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 1), 0 0 20px rgba(255, 0, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.8);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .neon-btn:hover {
+            background: linear-gradient(45deg, #0ff, #f06);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 30px rgba(255, 0, 255, 1);
+        }
+
+        /* 3D Earth rotation */
+        .earth-container {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 150px;
+            perspective: 1000px;
+        }
+
+        .earth {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 50%, rgba(0, 0, 0, 0.3) 100%);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+            transform-style: preserve-3d;
+            animation: rotateEarth 10s linear infinite;
+            background-color: #2f3a54; /* Base color for Earth */
+        }
+
+        .earth::before,
+        .earth::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 25%, rgba(0, 0, 0, 0.2) 100%);
+            transform: rotateX(90deg);
+        }
+
+        @keyframes rotateEarth {
+            0% {
+                transform: rotateY(0deg);
+            }
+
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
+
+        /* Text and Section Styles */
+        .neon-text {
+            color: #0ff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 1), 0 0 20px rgba(255, 0, 255, 1);
+        }
+    </style>
 </head>
-<body>
 
-  <!-- Header -->
-  <header>
-    <div class="logo">Snoz Connect</div>
-    <nav>
-      <a href="#wallet">Wallet</a>
-      <a href="#exchange">Exchange</a>
-      <a href="#explore">Explore</a>
-      <a href="portfolio.html">Portfolio</a>  <!-- Updated link -->
-    </nav>
-  </header>
+<body class="bg-gray-900 text-white font-sans">
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Welcome to Snoz Connect</h1>
-    <p>Be early to the future of finance. Buy Bitcoin, Ethereum, and other leading cryptocurrencies, while showcasing and monetizing your creative works.</p>
-    <div class="wallet-dropdown">
-      <button class="cta-button" id="connect-button" onclick="connectWallet()">Connect Wallet</button>
-      <div class="wallet-dropdown-content">
-        <a href="#" onclick="connectMetaMask()">MetaMask</a>
-        <a href="#" onclick="connectPhantom()">Phantom Wallet</a>
-      </div>
-    </div>
-    <p id="wallet-address" style="color: #00ff99; margin-top: 20px;"></p>
-    <p id="wallet-balance" style="color: #00ff99; margin-top: 10px;"></p>
-  </section>
+    <!-- Home Section -->
+    <section id="home" class="h-screen flex flex-col items-center justify-center bg-metaverse bg-cover bg-center">
+        <!-- Earth Animation -->
+        <div class="earth-container">
+            <div class="earth"></div>
+        </div>
 
-  <!-- Smart Contracts Portfolio -->
-  <section class="portfolio" id="portfolio">
-    <h2>Smart Contracts Portfolio</h2>
-    <p>Explore innovative Smart Contracts that power decentralized finance and digital assets on Snoz Connect.</p>
-    <a href="portfolio.html">
-      <button class="portfolio-button">View Portfolio</button>
-    </a>
-  </section>
+        <h1 class="glow-text text-6xl font-bold mb-6">Snoz Connect</h1>
+        <p class="mb-8 text-lg text-center">Showcase, manage, and monetize your creativity. Unlock new opportunities and engage your audience in a digital world.</p>
 
-  <!-- Subscription Section -->
-  <section id="subscription">
-    <h2>Subscribe to Development Updates</h2>
-    <p>Stay updated with the latest development news, platform features, and exclusive updates by subscribing with your email.</p>
-    <form action="/subscribe" method="POST">
-      <input type="email" name="email" required placeholder="Enter your email">
-      <button type="submit">Subscribe Now</button>
-    </form>
-  </section>
+        <div>
+            <button id="connectWallet" class="neon-btn">Connect Wallet</button>
+            <div id="walletInfo" class="mt-4"></div>
+        </div>
+    </section>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Snoz Connect. All rights reserved.</p>
-    <p>Designed with love and powered by Web3 technologies. <a href="#">Learn more</a></p>
-  </footer>
+    <!-- Dashboard Section (Initially Hidden) -->
+    <section id="dashboard" class="hidden py-20 bg-gray-800">
+        <div class="container mx-auto text-center">
+            <h2 class="neon-text text-4xl font-bold mb-6">Your Dashboard</h2>
+            <p class="text-lg mb-8">Manage your wallet and view your portfolio here in a virtual space.</p>
+            <div id="walletInfoDashboard"></div>
+            <button id="viewPortfolioBtn" class="neon-btn">View Portfolio</button>
+            <button id="disconnectWalletBtn" class="neon-btn mt-4 bg-red-600 hover:bg-red-700">Disconnect Wallet</button>
+            
+            <!-- Add the canvas for the chart -->
+            <div class="mt-12">
+                <canvas id="portfolioChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.4.0/dist/ethers.umd.min.js"></script> <!-- Include ethers.js -->
+    <script>
+        const connectWalletButton = document.getElementById('connectWallet');
+        const walletInfoElement = document.getElementById('walletInfo');
+        const homeSection = document.getElementById('home');
+        const dashboardSection = document.getElementById('dashboard');
+        const disconnectWalletButton = document.getElementById('disconnectWalletBtn');
 
-  <script>
-    // Connect Wallet logic
-    async function connectWallet() {
-      if (window.ethereum) {
-        connectMetaMask();
-      } else if (window.solana && window.solana.isPhantom) {
-        connectPhantom();
-      } else {
-        alert('No supported wallet found. Please install MetaMask or Phantom wallet.');
-      }
-    }
+        let userAddress = null;
 
-    // MetaMask connection logic
-    async function connectMetaMask() {
-      if (window.ethereum) {
-        try {
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          const account = accounts[0];
-          document.getElementById('wallet-address').innerText = 'Connected: ' + account;
-          
-          // Fetch balance
-          const provider = new ethers.JsonRpcProvider();
-          const balance = await provider.getBalance(account);
-          document.getElementById('wallet-balance').innerText = 'Balance: ' + ethers.utils.formatEther(balance) + ' ETH';
-        } catch (error) {
-          console.error('Error connecting MetaMask:', error);
+        connectWalletButton.addEventListener('click', async () => {
+            if (window.ethereum) {
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                await provider.send('eth_requestAccounts', []);
+                const signer = provider.getSigner();
+                userAddress = await signer.getAddress();
+                const balance = ethers.utils.formatEther(await provider.getBalance(userAddress));
+
+                // Display wallet info in the home section
+                walletInfoElement.innerHTML = `
+                    <p class="neon-text">Address: ${userAddress}</p>
+                    <p class="neon-text">Balance: ${balance} ETH</p>
+                `;
+                connectWalletButton.style.display = 'none';
+
+                // Hide home section and show dashboard section
+                homeSection.style.display = 'none';
+                dashboardSection.classList.remove('hidden');
+
+                // Display wallet info on the dashboard
+                const walletInfoDashboard = document.getElementById('walletInfoDashboard');
+                walletInfoDashboard.innerHTML = `
+                    <p class="neon-text">Connected Address: ${userAddress}</p>
+                    <p class="neon-text">Balance: ${balance} ETH</p>
+                `;
+                
+                // Call the function to render the chart
+                renderPortfolioChart();
+            } else {
+                alert('Please install MetaMask.');
+            }
+        });
+
+        // Disconnect wallet function (reloads the page to reset)
+        disconnectWalletButton.addEventListener('click', () => {
+            window.location.reload();
+        });
+
+        // Function to render the portfolio chart
+        function renderPortfolioChart() {
+            const ctx = document.getElementById('portfolioChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                    datasets: [{
+                        label: 'ETH Portfolio Performance',
+                        data: [0.1, 0.2, 0.15, 0.3, 0.25, 0.35], // Replace with actual data
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         }
-      } else {
-        alert('MetaMask not detected. Please install MetaMask.');
-      }
-    }
-    
-    // Phantom Wallet connection logic
-    async function connectPhantom() {
-      if (window.solana && window.solana.isPhantom) {
-        try {
-          const response = await window.solana.connect();
-          const publicKey = response.publicKey.toString();
-          document.getElementById('wallet-address').innerText = 'Connected: ' + publicKey;
-
-          // Fetch balance (Placeholder for Phantom wallet logic)
-          // You may need to implement fetching balance using Solana Web3.js
-          document.getElementById('wallet-balance').innerText = 'Balance: Placeholder for Solana balance';
-        } catch (error) {
-          console.error('Error connecting Phantom wallet:', error);
-        }
-      } else {
-        alert('Phantom wallet not detected. Please install Phantom wallet.');
-      }
-    }
-  </script>
+    </script>
 </body>
+
 </html>
